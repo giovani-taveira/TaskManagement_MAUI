@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskManagement.MVVM.Views._Components.ShimmerEffect">
+
+    <VerticalStackLayout>
+        <Grid x:Name="shimmerContainer" 
+          Opacity="1.0" 
+          Padding="20"
+          HorizontalOptions="Center"
+          RowSpacing="20">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0" HorizontalOptions="Center">
+                <BoxView HeightRequest="20" WidthRequest="150" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="250" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="200" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+            </StackLayout>
+            <StackLayout Grid.Row="1">
+                <BoxView HeightRequest="20" WidthRequest="150" Margin="5" BackgroundColor="AliceBlue" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="250" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="200" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+            </StackLayout>
+            <StackLayout Grid.Row="2">
+                <BoxView HeightRequest="20" WidthRequest="150" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="250" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="200" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+            </StackLayout>
+            <StackLayout Grid.Row="3">
+                <BoxView HeightRequest="20" WidthRequest="150" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="250" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="200" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+            </StackLayout>
+            <StackLayout Grid.Row="4">
+                <BoxView HeightRequest="20" WidthRequest="150" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="250" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="200" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
+            </StackLayout>
+        </Grid>
+    </VerticalStackLayout>
+
+
+</ContentView>
