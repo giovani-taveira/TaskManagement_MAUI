@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Style TargetType="Button"
+           x:Key="Button_Add">
+        <Setter Property="ImageSource" Value="add.png" />
+        <Setter Property="WidthRequest" Value="42" />
+        <Setter Property="HeightRequest" Value="42" />
+        <Setter Property="CornerRadius" Value="360" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}" />
+    </Style>
+
+    <Style TargetType="Button"
+           x:Key="Button_filter">
+        <Setter Property="ImageSource" Value="{AppThemeBinding Light=filter.png, Dark=filter_white}" />
+        <Setter Property="WidthRequest" Value="42" />
+        <Setter Property="HeightRequest" Value="42" />
+        <Setter Property="CornerRadius" Value="360" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}" />
+    </Style>
+
+</ResourceDictionary>

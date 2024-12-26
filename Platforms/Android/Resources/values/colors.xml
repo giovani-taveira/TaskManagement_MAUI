@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="colorPrimary">#14377e</color>
+	<color name="colorPrimaryDark">#1f1f1f</color>
+	<color name="colorAccent">#14377e</color>
+
+	<style name="MainTheme" parent="MainTheme.Base">
+		<item name="colorPrimary">#14377e</item>
+		<item name="colorAccent">#14377e</item>
+	</style>
+	<style name="NightTheme" parent="MainTheme.Base">
+		<item name="colorPrimary">#5acbc9</item>
+		<item name="colorAccent">#5acbc9</item>
+	</style>
+</resources>

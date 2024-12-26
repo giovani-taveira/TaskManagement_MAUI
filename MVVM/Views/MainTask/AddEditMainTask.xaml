@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TaskManagement.MVVM.Views.MainTask.AddEditMainTask"
+             Title="Criar Nova Tarefa">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+    </ContentPage.Resources>
+    
+    <VerticalStackLayout Padding="20" Spacing="10">
+        
+        <Label Text="Título da Tarefa" />
+        <Border Style="{StaticResource Border_Entry}">
+            <Entry BackgroundColor="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}"
+                   ClearButtonVisibility="WhileEditing"
+                   Text="{Binding Title}"/>
+        </Border>
+        
+
+        <Label Text="Descrição da Tarefa"/>
+        <Border Style="{StaticResource Border_Entry}">
+            <Editor x:Name="editor_descrition"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}"
+                    AutoSize="TextChanges"
+                    MinimumHeightRequest="80"
+                    Text="{Binding Description}"/>
+        </Border>
+
+
+        <Label Text="Prazo de Finalização"/>
+        <Border Style="{StaticResource Border_Entry}">
+            <Grid ColumnDefinitions="Auto, *" VerticalOptions="Center">
+                <Image Source="{AppThemeBinding Light=calendar.png, Dark=calendar_white.png}"
+                       WidthRequest="24"
+                       HeightRequest="24"
+                       VerticalOptions="Center"
+                       Margin="10,0,10,0" />
+
+                <DatePicker x:Name="datepicker_deadline"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}"
+                            Format="dd/MM/yyyy"
+                            Date="{Binding DeadlineDate}" 
+                            Grid.Column="1"/>
+            </Grid>
+        </Border>
+        
+
+        <HorizontalStackLayout>
+            <CheckBox x:Name="checkbox_isNotifiable" 
+                      VerticalOptions="Center"
+                      IsChecked="{Binding IsNotifiable}"/>
+            <Label Text="Enviar Notificação de Prazo"
+                   VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+        
+
+        <Button x:Name="button_submit"
+                Text="Salvar Tarefa"
+                FontAttributes="Bold"
+                BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"                  
+                WidthRequest="300"
+                HeightRequest="45"
+                CornerRadius="10"
+                Margin=" 0, 80, 0, 0"
+                HorizontalOptions="Center"
+                Command="{Binding AddMainTaskCommand}"/>
+
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <Style TargetType="Border"
+        x:Key="Border_SearchBar">
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+        <Setter Property="HeightRequest" Value="45" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="Grid.Column" Value="0" />
+        <Setter Property="Shadow">
+            <Shadow Brush="Black"
+                    Opacity="0.2"
+                    Offset="5,5"
+                    Radius="20" />
+        </Setter>
+    </Style>
+
+    <Style TargetType="Border"
+        x:Key="Border_Entry">
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 5" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="Grid.Column" Value="0" />
+    </Style>
+
+</ResourceDictionary>
