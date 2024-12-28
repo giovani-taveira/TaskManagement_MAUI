@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" 
+             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+             x:Class="TaskManagement.MVVM.Views.MainTask.MainTaskDetails"          
+             Background="{AppThemeBinding Light={StaticResource Background4}, Dark={StaticResource BackgroundDark4}}"
+             CornerRadius="20"
+             HandleColor="Red">
+
+    <the49:BottomSheet.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding GetMainTaskByIdCommand}" EventName="Loaded" />
+    </the49:BottomSheet.Behaviors>
+
+    <the49:BottomSheet.Detents>
+        <the49:MediumDetent />
+    </the49:BottomSheet.Detents>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" Grid.ColumnSpan="2"
+                   WidthRequest="150"
+                   HeightRequest="5"
+                   BackgroundColor="{StaticResource Gray200}"
+                   RadiusX="50"
+                   RadiusY="50"/>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btnSubtasks2"
+                    Grid.Column="0"
+                    Margin="20,0,0,0"
+                    HorizontalOptions="Start"
+                    Text="Concluir tarefa"
+                    Style="{StaticResource Button_endTask}">
+            </Button>
+
+            <HorizontalStackLayout Grid.Row="1" Grid.Column="1"
+                               Margin="30,0,20,0" 
+                               Spacing="10"
+                               HorizontalOptions="End">
+
+                <Button x:Name="btnSubtasks"
+                    Grid.Column="1"
+                    Style="{StaticResource Button_subtasks}">
+                </Button>
+                <Button x:Name="btnEdit"
+                    Grid.Column="1"
+                    Style="{StaticResource Button_edit}">
+                </Button>
+                <Button x:Name="btnDelete"
+                    Grid.Column="1"
+                    Style="{StaticResource Button_delete}">
+                </Button>
+
+            </HorizontalStackLayout>
+        </Grid>
+
+        <Label Grid.Row="2"
+               Grid.ColumnSpan="2"
+               Text="{Binding Title}"
+               VerticalOptions="Start"
+               FontSize="20"
+               FontAttributes="Bold"
+               Margin="20,15,20,0"/>
+
+        <ScrollView Grid.Row="3"
+                    Grid.ColumnSpan="2">
+
+            <Label Text="{Binding Description}"
+                    VerticalOptions="Start"
+                    FontSize="16"
+                    Margin="20,15,20,0"/>
+        </ScrollView>
+
+    </Grid>
+</the49:BottomSheet>

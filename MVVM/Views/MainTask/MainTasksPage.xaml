@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:local="clr-namespace:TaskManagement.MVVM.Views._Components"
+             xmlns:views="clr-namespace:TaskManagement.MVVM.Views.MainTask"
              x:Class="TaskManagement.MVVM.Views.MainTask.MainTasksPage"
              xmlns:converters="clr-namespace:TaskManagement.Helpers.ValueConverters"
+             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
              Title="Tarefas">
 
     <ContentPage.Behaviors>
@@ -36,7 +38,6 @@
                     Grid.Column="1"
                     Style="{StaticResource Button_filter}"
                     Clicked="btnFilter_Clicked">
-
             </Button>
 
             <Button x:Name="btnAdd"
@@ -54,7 +55,9 @@
             <CollectionView VerticalOptions="Fill" 
                             BackgroundColor="{AppThemeBinding Light={StaticResource Background1}, Dark={StaticResource BackgroundDark1}}" 
                             ItemsSource="{Binding MainTasks}"
-                            Margin="0,0,0,0">
+                            Margin="0,0,0,0"
+                            SelectionMode="Single"
+                            SelectionChanged="OnTaskSelected">
 
                 <CollectionView.EmptyView>
                     <Grid>
@@ -73,7 +76,6 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <VerticalStackLayout Padding="10, 5, 10, 5">
-                                                     
                             <Border Grid.Column="0"
                                     Stroke="{AppThemeBinding Light={StaticResource Background3}, Dark={StaticResource BackgroundDark3}}"
                                     StrokeShape="RoundRectangle 10,10,10,10"
@@ -84,12 +86,13 @@
                                             Offset="1,1"
                                             Radius="10" />
                                 </Border.Shadow>
-                                
+
                                 <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Background3}, Dark={StaticResource BackgroundDark3}}"
                                        BorderColor="Transparent"
                                        HorizontalOptions="Fill"
                                        HeightRequest="100"
-                                       Padding="0">
+                                       Padding="0"
+                                       InputTransparent="True">
 
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -147,8 +150,6 @@
                                                FontSize="14"
                                                Margin="3,10,0,0"/>
                                     </Grid>
-
-
                                 </Frame>
                             </Border>
                         </VerticalStackLayout>

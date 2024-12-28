@@ -19,6 +19,29 @@ namespace TaskManagement.Services
             _subTaskRepository = subTaskRepository;
         }
 
+        public async Task<MainTaskDTO> GetMainTasksById(Guid id)
+        {
+            var task = await _repository.GetByIdAsync(id);
+
+            var subTasks = await _subTaskRepository.SearchAsync(x => x.TaskId.Equals(task.Id));
+            var taskStatus = task.Status == StatusEnum.Ativo.ToString() && task.DeadlineDate.HasValue && DateTime.Today > task.DeadlineDate.Value
+                                            ? StatusEnum.Em_Atraso.ToString().Replace("_", " ") : task.Status;
+
+            var concludedTask = subTasks.Where(x => x.Status.Equals(StatusEnum.Concluido.ToString()));
+
+            return new MainTaskDTO
+            (
+                Id: task.Id,
+                Title: task.Title,
+                Description: task.Description,
+                DeadlineDate: task.DeadlineDate.Value.ToString("dd/MM/yyyy") ?? "Sem Prazo",
+                Status: taskStatus,
+                QtdSubTasks: subTasks.Any() ? $"{subTasks.Where(x => x.Status.Equals(StatusEnum.Concluido.ToString())).Count()}/{subTasks.Count()}" : "0/0",
+                ProgressDrawable: 0,
+                CircularProgressDrawableInstance: null
+            );
+        }
+
         public async Task<List<MainTaskDTO>> GetAllMainTasks()
         {
             var tasks = await _repository.GetAll();
@@ -34,7 +57,9 @@ namespace TaskManagement.Services
 
                 tasksList.Add(new MainTaskDTO
                 (
+                    Id: task.Id,
                     Title: task.Title,
+                    Description: task.Description,
                     DeadlineDate: task.DeadlineDate.Value.ToString("dd/MM/yyyy") ?? "Sem Prazo",
                     Status: taskStatus,
                     QtdSubTasks: subTasks.Any() ? $"{subTasks.Where(x => x.Status.Equals(StatusEnum.Concluido.ToString())).Count()}/{subTasks.Count()}" : "0/0",

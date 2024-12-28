@@ -8,5 +8,6 @@ namespace TaskManagement.Services.Interfaces
     {
         Task<BaseResponseDTO> CreateMainTask(MainTask task);
         Task<List<MainTaskDTO>> GetAllMainTasks();
+        Task<MainTaskDTO> GetMainTasksById(Guid id);
     }
 }

@@ -57,13 +57,21 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Platforms\Android\Resources\values\styles.xml" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Images\add.png" />
 	  <None Remove="Resources\Images\calendar.png" />
 	  <None Remove="Resources\Images\calendar_white.png" />
+	  <None Remove="Resources\Images\delete_red.png" />
+	  <None Remove="Resources\Images\edit_orange.png" />
 	  <None Remove="Resources\Images\error.png" />
 	  <None Remove="Resources\Images\error_animated.gif" />
 	  <None Remove="Resources\Images\filter.png" />
 	  <None Remove="Resources\Images\filter_white.png" />
+	  <None Remove="Resources\Images\subtasks.png" />
+	  <None Remove="Resources\Images\subtasks_white.png" />
 	  <None Remove="Resources\Images\sucess.png" />
 	  <None Remove="Resources\Images\sucess_animated.gif" />
 	  <None Remove="Resources\Images\task.png" />
@@ -80,6 +88,7 @@
 		<PackageReference Include="SQLitePCLRaw.core" Version="2.1.10" />
 		<PackageReference Include="SQLitePCLRaw.provider.dynamic_cdecl" Version="2.1.10" />
 		<PackageReference Include="SQLitePCLRaw.provider.sqlite3" Version="2.1.10" />
+		<PackageReference Include="The49.Maui.BottomSheet" Version="8.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -87,6 +96,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\MainTask\AddEditMainTask.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\MainTask\MainTaskDetails.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\MainTask\MainTasksPage.xaml">
@@ -101,6 +113,24 @@
 	  <MauiXaml Update="Resources\Styles\BorderStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-android'">
+	  <PackageReference Include="WhatIsThisSheet">
+	    <Version>1.0.6</Version>
+	  </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-ios'">
+	  <PackageReference Include="WhatIsThisSheet">
+	    <Version>1.0.6</Version>
+	  </PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-maccatalyst'">
+	  <PackageReference Include="WhatIsThisSheet">
+	    <Version>1.0.6</Version>
+	  </PackageReference>
 	</ItemGroup>
 
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionTaskManagementHideInfoBar="True" /></VisualStudio></ProjectExtensions>

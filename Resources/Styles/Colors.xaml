@@ -22,10 +22,12 @@
     <Color x:Key="Background1">#f6f6f6</Color>
     <Color x:Key="Background2">#e8e8e8</Color>
     <Color x:Key="Background3">#ffffff</Color>
+    <Color x:Key="Background4">#fafafa</Color>
 
-    <Color x:Key="BackgroundDark1">#353535</Color>
+    <Color x:Key="BackgroundDark1">#353535</Color> 
     <Color x:Key="BackgroundDark2">#353535</Color>
     <Color x:Key="BackgroundDark3">#1f1f1f</Color>
+    <Color x:Key="BackgroundDark4">#222222</Color>
 
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>

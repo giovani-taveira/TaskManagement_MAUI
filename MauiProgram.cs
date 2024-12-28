@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using TaskManagement.Configurations;
+using The49.Maui.BottomSheet;
 
 namespace TaskManagement
 {
@@ -11,7 +12,8 @@ namespace TaskManagement
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .UseMauiCommunityToolkit()
+                .UseBottomSheet()
+                .UseMauiCommunityToolkit()             
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

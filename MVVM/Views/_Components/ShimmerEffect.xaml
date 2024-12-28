@@ -24,7 +24,7 @@
                 <BoxView HeightRequest="20" WidthRequest="200" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
             </StackLayout>
             <StackLayout Grid.Row="1">
-                <BoxView HeightRequest="20" WidthRequest="150" Margin="5" BackgroundColor="AliceBlue" CornerRadius="5" />
+                <BoxView HeightRequest="20" WidthRequest="150" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
                 <BoxView HeightRequest="20" WidthRequest="250" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
                 <BoxView HeightRequest="20" WidthRequest="200" Margin="5" BackgroundColor="LightGray" CornerRadius="5" />
             </StackLayout>

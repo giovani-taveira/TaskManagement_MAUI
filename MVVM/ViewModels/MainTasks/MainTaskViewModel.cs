@@ -44,6 +44,23 @@ namespace TaskManagement.MVVM.ViewModels
         }
 
         [RelayCommand]
+        public async Task GetMainTasksById(int id)
+        {
+            MainTasks.Clear();
+            AllMainTasks.Clear();
+
+            IsLoading = true;
+            IsNotLoading = false;
+
+            var tasks = await _mainTaskService.GetAllMainTasks();
+            AllMainTasks.AddRange(tasks);
+            FillProgressDrawable(tasks);
+
+            IsLoading = !IsLoading;
+            IsNotLoading = !IsNotLoading;
+        }
+
+        [RelayCommand]
         public void SearchMainTask(string searchValue)
         {
             var tasks = AllMainTasks.Where(x => (x.Title.Equals(string.Empty) || x.Title.Contains(searchValue))).ToList();           
