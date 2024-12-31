@@ -15,6 +15,7 @@
 
     <ContentPage.Resources>
         <converters:StatusToColorConverter x:Key="statusToColorConverter" />
+        <converters:DeadlineDateToStringConverter x:Key="deadlineDateToStringConverter" />
     </ContentPage.Resources>
 
     <StackLayout>
@@ -145,7 +146,7 @@
                                                VerticalOptions="End"/>
 
                                         <Label Grid.Column="4" Grid.Row="1"
-                                               Text="{Binding DeadlineDate}"
+                                               Text="{Binding DeadlineDate, Converter={StaticResource deadlineDateToStringConverter}}"
                                                VerticalOptions="Start"
                                                FontSize="14"
                                                Margin="3,10,0,0"/>

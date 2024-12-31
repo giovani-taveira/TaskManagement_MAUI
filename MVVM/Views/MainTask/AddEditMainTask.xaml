@@ -11,6 +11,10 @@
         </Style>
     </ContentPage.Resources>
 
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding GetMainTaskByIdCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
 
@@ -45,6 +49,7 @@
                                 BackgroundColor="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}"
                                 Format="dd/MM/yyyy"
                                 Date="{Binding DeadlineDate}" 
+                                MinimumDate="{Binding DeadlineDate}"
                                 Grid.Column="1"/>
                 </Grid>
             </Border>
@@ -72,6 +77,4 @@
 
         </VerticalStackLayout>
     </ScrollView>
-    
-    
 </ContentPage>

@@ -4,6 +4,7 @@
     {
         Ativo,
         Concluido,
-        Em_Atraso
+        Em_Atraso,
+        Cancelado
     }
 }

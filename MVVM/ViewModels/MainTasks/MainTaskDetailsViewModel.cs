@@ -1,6 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using TaskManagement.Helpers.Enums;
+using TaskManagement.MVVM.Views._Components;
 using TaskManagement.Services.Interfaces;
+using static TaskManagement.Helpers.Messages.MainTaskMessages;
 
 namespace TaskManagement.MVVM.ViewModels.MainTasks
 {
@@ -16,12 +21,20 @@ namespace TaskManagement.MVVM.ViewModels.MainTasks
             _mainTaskService = mainTaskService;
             _taskId = taskId;
         }
-    
+
+        public event Action CloseBottomSheetRequested;
+
         [ObservableProperty]
         private string _title;
 
         [ObservableProperty]
         private string _description;
+
+        [ObservableProperty]
+        private bool _isCompleteButtonEnabled = true;
+
+        [ObservableProperty]
+        private bool _isReactivateButtonEnabled = false;
 
 
         [RelayCommand]
@@ -33,7 +46,61 @@ namespace TaskManagement.MVVM.ViewModels.MainTasks
             {
                 Title = task.Title;
                 Description = task.Description;
+
+                if(task.Status == StatusEnum.Concluido.ToString())
+                {
+                    IsCompleteButtonEnabled = false;
+                    IsReactivateButtonEnabled = true;
+                }             
             }
+        }
+
+        [RelayCommand]
+        public async Task DeleteMainTask()
+        {
+            var result = await Application.Current.MainPage.DisplayAlert("Atenção", "Tem certeza que deseja deletar a tarefa? Essa ação não poderá ser desfeita!", "Sim", "Não");
+            if (!result) return;
+
+            var deleteResponse = await _mainTaskService.DeleteMainTask(_taskId);
+
+            if (deleteResponse.Sucess)
+                await Application.Current.MainPage.ShowPopupAsync(new CustomPopup("sucess.gif", "Tarefa deletada com sucesso!", 3000));
+            else
+                await Application.Current.MainPage.ShowPopupAsync(new CustomPopup("error.gif", deleteResponse.Message, 5000));
+
+            WeakReferenceMessenger.Default.Send(new BottomSheetClosedMessage("Close BottomSheet"));
+        }
+
+        [RelayCommand]
+        public async Task CompleteMainTask()
+        {
+            var result = await Application.Current.MainPage.DisplayAlert("Atenção", "Esta ação irá concluir automaticamente todas as subtarefas ativas! deseja prosseguir mesmo assim?", "Sim", "Não");
+            if (!result) return;
+
+            var updateResponse = await _mainTaskService.CompleteMainTask(_taskId);
+
+            if (updateResponse.Sucess)
+                await Application.Current.MainPage.ShowPopupAsync(new CustomPopup("sucess.gif", "Tarefa concluída com sucesso!", 3000));
+            else
+                await Application.Current.MainPage.ShowPopupAsync(new CustomPopup("error.gif", updateResponse.Message, 5000));
+
+            WeakReferenceMessenger.Default.Send(new BottomSheetClosedMessage("Close BottomSheet"));
+        }
+
+        [RelayCommand]
+        public async Task ReactivateMainTask()
+        {
+            var result = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja reativar esta tarefa?", "Sim", "Não");
+            if (!result) return;
+
+            var updateResponse = await _mainTaskService.ReactivateMainTask(_taskId);
+
+            if (updateResponse.Sucess)
+                await Application.Current.MainPage.ShowPopupAsync(new CustomPopup("sucess.gif", "Tarefa reativada com sucesso!", 3000));
+            else
+                await Application.Current.MainPage.ShowPopupAsync(new CustomPopup("error.gif", updateResponse.Message, 5000));
+
+            WeakReferenceMessenger.Default.Send(new BottomSheetClosedMessage("Close BottomSheet"));
         }
     }
 }

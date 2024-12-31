@@ -6,9 +6,10 @@ namespace TaskManagement.DTOs.MainTask
         Guid Id,
         string Title,
         string Description,
-        string DeadlineDate,
+        DateTime? DeadlineDate,
         string Status,
         string QtdSubTasks,
+        bool IsNotifiable,
         double ProgressDrawable,
         CircularProgressDrawable CircularProgressDrawableInstance
         );

@@ -5,12 +5,10 @@ namespace TaskManagement.MVVM.Views.MainTask;
 
 public partial class AddEditMainTask : ContentPage
 {
-	public AddEditMainTask(IMainTaskService mainTaskService)
+	public AddEditMainTask(IMainTaskService mainTaskService, Guid? mainTaskId)
 	{
 		InitializeComponent();
 
-		BindingContext = new AddEditTaskViewModel(mainTaskService, this.Navigation);
-
-        datepicker_deadline.MinimumDate = DateTime.Now;
+		BindingContext = new AddEditTaskViewModel(mainTaskService, this.Navigation, mainTaskId);
     }
 }

@@ -37,11 +37,23 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="btnSubtasks2"
+            <Button x:Name="btnComplete"
                     Grid.Column="0"
                     Margin="20,0,0,0"
                     HorizontalOptions="Start"
                     Text="Concluir tarefa"
+                    IsVisible="{Binding IsCompleteButtonEnabled}"
+                    Command="{Binding CompleteMainTaskCommand}"
+                    Style="{StaticResource Button_endTask}">
+            </Button>
+
+            <Button x:Name="btnReactvate"
+                    Grid.Column="0"
+                    Margin="20,0,0,0"
+                    HorizontalOptions="Start"
+                    Text="Reativar tarefa"
+                    IsVisible="{Binding IsReactivateButtonEnabled}"
+                    Command="{Binding ReactivateMainTaskCommand}"
                     Style="{StaticResource Button_endTask}">
             </Button>
 
@@ -51,16 +63,19 @@
                                HorizontalOptions="End">
 
                 <Button x:Name="btnSubtasks"
-                    Grid.Column="1"
-                    Style="{StaticResource Button_subtasks}">
+                        Grid.Column="1"
+                        Clicked="btnSubtasks_Clicked"
+                        Style="{StaticResource Button_subtasks}">
                 </Button>
                 <Button x:Name="btnEdit"
-                    Grid.Column="1"
-                    Style="{StaticResource Button_edit}">
+                        Grid.Column="1"
+                        Clicked="btnEdit_Clicked"
+                        Style="{StaticResource Button_edit}">
                 </Button>
                 <Button x:Name="btnDelete"
-                    Grid.Column="1"
-                    Style="{StaticResource Button_delete}">
+                        Grid.Column="1"
+                        Command="{Binding DeleteMainTaskCommand}"
+                        Style="{StaticResource Button_delete}">
                 </Button>
 
             </HorizontalStackLayout>
@@ -82,6 +97,5 @@
                     FontSize="16"
                     Margin="20,15,20,0"/>
         </ScrollView>
-
     </Grid>
 </the49:BottomSheet>

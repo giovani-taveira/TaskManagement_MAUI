@@ -104,6 +104,9 @@
 	  <MauiXaml Update="MVVM\Views\MainTask\MainTasksPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\SubTask\SubTasksPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\_Components\ShimmerEffect.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
