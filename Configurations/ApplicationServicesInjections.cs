@@ -8,6 +8,7 @@ namespace TaskManagement.Configurations
         public static void AddApplicationServicesInjections(this IServiceCollection services)
         {
             services.AddScoped<IMainTaskService, MainTaskService>();
+            services.AddScoped<ISubTaskService, SubTaskService>();
         }
     }
 }

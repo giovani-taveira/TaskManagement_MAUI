@@ -5,8 +5,7 @@
              xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
              x:Class="TaskManagement.MVVM.Views.MainTask.MainTaskDetails"          
              Background="{AppThemeBinding Light={StaticResource Background4}, Dark={StaticResource BackgroundDark4}}"
-             CornerRadius="20"
-             HandleColor="Red">
+             CornerRadius="20">
 
     <the49:BottomSheet.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding GetMainTaskByIdCommand}" EventName="Loaded" />
@@ -20,6 +19,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="80"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="50"/>
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -81,15 +82,42 @@
             </HorizontalStackLayout>
         </Grid>
 
-        <Label Grid.Row="2"
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <HorizontalStackLayout Grid.Row="0" Grid.Column="0"
+                       Margin="20,0,0,0" 
+                       Spacing="5"
+                       HorizontalOptions="StartAndExpand">
+
+                <Label Text="Criado Em:" />
+                <Label Text="{Binding CreatedAt}" />
+                
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="0" Grid.Column="1"
+                       Margin="5,0,0,0" 
+                       Spacing="5"
+                       HorizontalOptions="StartAndExpand">
+
+                <Label Text="Concluído Em:"/>
+                <Label Text="{Binding ConcludedAt}"/>
+                
+            </HorizontalStackLayout>
+        </Grid>
+
+        <Label Grid.Row="4"
                Grid.ColumnSpan="2"
                Text="{Binding Title}"
                VerticalOptions="Start"
-               FontSize="20"
+               FontSize="22"
                FontAttributes="Bold"
-               Margin="20,15,20,0"/>
+               Margin="20,20,20,0"/>
 
-        <ScrollView Grid.Row="3"
+        <ScrollView Grid.Row="5"
                     Grid.ColumnSpan="2">
 
             <Label Text="{Binding Description}"

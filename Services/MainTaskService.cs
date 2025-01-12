@@ -23,7 +23,7 @@ namespace TaskManagement.Services
         {
             var task = await _repository.GetByIdAsync(id);
 
-            var subTasks = await _subTaskRepository.SearchAsync(x => x.TaskId.Equals(task.Id));
+            var subTasks = await _subTaskRepository.SearchAsync(x => x.MainTaskId.Equals(task.Id));
             var taskStatus = task.Status == StatusEnum.Ativo.ToString() && task.DeadlineDate.HasValue && DateTime.Today > task.DeadlineDate.Value
                                             ? StatusEnum.Em_Atraso.ToString().Replace("_", " ") : task.Status;
 
@@ -35,6 +35,8 @@ namespace TaskManagement.Services
                 Title: task.Title,
                 Description: task.Description,
                 DeadlineDate: task.DeadlineDate,
+                CreatedAt: task.CreatedAt,
+                ConcludedAt: task.ConcludedAt,
                 Status: taskStatus,
                 IsNotifiable: task.IsNotifiable,
                 QtdSubTasks: subTasks.Any() ? $"{subTasks.Where(x => x.Status.Equals(StatusEnum.Concluido.ToString())).Count()}/{subTasks.Count()}" : "0/0",
@@ -50,7 +52,7 @@ namespace TaskManagement.Services
 
             foreach (var task in tasks)
             {
-                var subTasks = await _subTaskRepository.SearchAsync(x => x.TaskId.Equals(task.Id));
+                var subTasks = await _subTaskRepository.SearchAsync(x => x.MainTaskId.Equals(task.Id));
                 var taskStatus = task.Status == StatusEnum.Ativo.ToString() && task.DeadlineDate.HasValue && DateTime.Today > task.DeadlineDate.Value
                                                 ? StatusEnum.Em_Atraso.ToString().Replace("_", " ") : task.Status;
 
@@ -62,6 +64,8 @@ namespace TaskManagement.Services
                     Title: task.Title,
                     Description: task.Description,
                     DeadlineDate: task.DeadlineDate,
+                    CreatedAt: task.CreatedAt,
+                    ConcludedAt: task.ConcludedAt,
                     Status: taskStatus,
                     IsNotifiable: task.IsNotifiable,
                     QtdSubTasks: subTasks.Any() ? $"{subTasks.Where(x => x.Status.Equals(StatusEnum.Concluido.ToString())).Count()}/{subTasks.Count()}" : "0/0",
@@ -140,7 +144,7 @@ namespace TaskManagement.Services
             try
             {
                 var mainTask = await _repository.GetByIdAsync(id);
-                var subtasks = await _subTaskRepository.SearchAsync(x => x.TaskId.Equals(id));
+                var subtasks = await _subTaskRepository.SearchAsync(x => x.MainTaskId.Equals(id));
 
                 var subtasksToUpdate = new List<SubTask>();
 
@@ -148,9 +152,10 @@ namespace TaskManagement.Services
                 {
                     foreach (var subtask in subtasks)
                     {
-                        if (subtask.Status.Equals(StatusEnum.Cancelado.ToString())) continue;
+                        if (!subtask.Status.Equals(StatusEnum.Ativo.ToString())) continue;
 
                         subtask.Status = StatusEnum.Concluido.ToString();
+                        subtask.ConcludedAt = DateTime.Now;
                         subtasksToUpdate.Add(subtask);
                     }
 
@@ -160,9 +165,10 @@ namespace TaskManagement.Services
                 }
                 
                 mainTask.Status = StatusEnum.Concluido.ToString();
-                var resposnseMainUpdate = await _repository.UpdateAsync(mainTask);
+                mainTask.ConcludedAt = DateTime.Now;
+                var responseMainUpdate = await _repository.UpdateAsync(mainTask);
 
-                if (resposnseMainUpdate == 1)
+                if (responseMainUpdate == 1)
                     return new BaseResponseDTO { Sucess = true };
                 else
                     return new BaseResponseDTO { Sucess = false, Message = "Erro ao atualizar a tarefa" };
@@ -180,6 +186,7 @@ namespace TaskManagement.Services
             {
                 var mainTask = await _repository.GetByIdAsync(id);
                 mainTask.Status = StatusEnum.Ativo.ToString();
+                mainTask.ConcludedAt = null;
                 var resposnseMainUpdate = await _repository.UpdateAsync(mainTask);
 
                 if (resposnseMainUpdate == 1)

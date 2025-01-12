@@ -6,14 +6,11 @@ namespace TaskManagement
 {
     public partial class App : Application
     {
-        private readonly IMainTaskService _mainTaskService;
-        public App(IMainTaskService mainTaskService)
+        public App(IMainTaskService mainTaskService, ISubTaskService subTaskService)
         {
             InitializeComponent();
 
-            _mainTaskService = mainTaskService;
-
-            MainPage = new NavigationPage(new MainTasksPage(_mainTaskService));
+            MainPage = new NavigationPage(new MainTasksPage(mainTaskService, subTaskService));
         }
     }
 }

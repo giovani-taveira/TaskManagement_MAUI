@@ -67,13 +67,13 @@
 	  <None Remove="Resources\Images\delete_red.png" />
 	  <None Remove="Resources\Images\edit_orange.png" />
 	  <None Remove="Resources\Images\error.png" />
-	  <None Remove="Resources\Images\error_animated.gif" />
 	  <None Remove="Resources\Images\filter.png" />
 	  <None Remove="Resources\Images\filter_white.png" />
+	  <None Remove="Resources\Images\info.png" />
+	  <None Remove="Resources\Images\info_white.png" />
 	  <None Remove="Resources\Images\subtasks.png" />
 	  <None Remove="Resources\Images\subtasks_white.png" />
 	  <None Remove="Resources\Images\sucess.png" />
-	  <None Remove="Resources\Images\sucess_animated.gif" />
 	  <None Remove="Resources\Images\task.png" />
 	</ItemGroup>
 
@@ -92,6 +92,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="MVVM\Views\SubTask\AddEditSubTask.xaml.cs">
+	    <DependentUpon>AddEditSubTask.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="MVVM\Views\Dialogs\CustomResultDialog.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -102,6 +108,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\MainTask\MainTasksPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\SubTask\AddEditSubTask.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\SubTask\SubTaskDetails.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\SubTask\SubTasksPage.xaml">

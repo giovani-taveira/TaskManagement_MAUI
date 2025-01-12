@@ -13,14 +13,17 @@ namespace TaskManagement.MVVM.Views.MainTask;
 public partial class MainTasksPage : ContentPage
 {
     private readonly IMainTaskService _mainTaskService;
+    private readonly ISubTaskService _subTaskService;
     private CircularProgressDrawable _progressDrawable;
     private string _selectedValue;
     private MainTaskDetails _bottomSheet;
-    public MainTasksPage(IMainTaskService mainTaskService)
-    {       
+    public MainTasksPage(IMainTaskService mainTaskService, 
+        ISubTaskService subTaskService)
+    {
         InitializeComponent();
 
         _mainTaskService = mainTaskService;
+        _subTaskService = subTaskService;
 
         BindingContext = new MainTaskViewModel(_mainTaskService);
 
@@ -108,6 +111,6 @@ public partial class MainTasksPage : ContentPage
 
     private void OpenSubTasksPageTask(Guid mainTaskId)
     {
-        Navigation.PushAsync(new SubTasksPage(mainTaskId));
+        Navigation.PushAsync(new SubTasksPage(mainTaskId, _subTaskService));
     }
 }

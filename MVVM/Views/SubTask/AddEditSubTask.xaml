@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskManagement.MVVM.Views.SubTask.AddEditSubTask"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="TaskManagement.MVVM.Views.MainTask.AddEditMainTask"
-             Title="Criar Nova Tarefa">
+             xmlns:converters="clr-namespace:TaskManagement.Helpers.ValueConverters"
+             Title="Criar Sub Tarefa">
 
     <ContentPage.Resources>
         <Style TargetType="Label">
             <Setter Property="FontAttributes" Value="Bold" />
         </Style>
+        <ResourceDictionary>
+            <converters:NullableDateTimeConverter x:Key="NullableDateTimeConverter" />
+        </ResourceDictionary>
     </ContentPage.Resources>
 
     <ContentPage.Behaviors>
@@ -18,24 +22,24 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
 
-            <Label Text="Título da Tarefa" />
+            <Label Text="Título da Sub Tarefa" />
             <Border Style="{StaticResource Border_Entry}">
                 <Entry BackgroundColor="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}"
-                       ClearButtonVisibility="WhileEditing"
-                       Text="{Binding Title}"/>
+                    ClearButtonVisibility="WhileEditing"
+                    Text="{Binding Title}"/>
             </Border>
 
 
-            <Label Text="Descrição da Tarefa"/>
+            <Label Text="Descrição da Sub Tarefa"/>
             <Border Style="{StaticResource Border_Entry}">
                 <Editor x:Name="editor_descrition"
-                        BackgroundColor="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}"
-                        AutoSize="TextChanges"
-                        MinimumHeightRequest="80"
-                        Text="{Binding Description}"/>
+                     BackgroundColor="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}"
+                     AutoSize="TextChanges"
+                     MinimumHeightRequest="80"
+                     Text="{Binding Description}"/>
             </Border>
 
-
+            
             <Label Text="Prazo de Finalização"/>
             <Border Style="{StaticResource Border_Entry}">
                 <Grid ColumnDefinitions="Auto, *" VerticalOptions="Center">
@@ -48,32 +52,22 @@
                     <DatePicker x:Name="datepicker_deadline"
                                 BackgroundColor="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}"
                                 Format="dd/MM/yyyy"
-                                Date="{Binding DeadlineDate}" 
-                                MinimumDate="{Binding DeadlineDate}"
-                                Grid.Column="1"/>
+                                Grid.Column="1"
+                                Date="{Binding DeadlineDate, Converter={StaticResource NullableDateTimeConverter},Mode=TwoWay}"/>
                 </Grid>
             </Border>
 
-
-            <HorizontalStackLayout>
-                <CheckBox x:Name="checkbox_isNotifiable" 
-                  VerticalOptions="Center"
-                  IsChecked="{Binding IsNotifiable}"/>
-                <Label Text="Enviar Notificação de Prazo"
-               VerticalOptions="Center"/>
-            </HorizontalStackLayout>
-
-
+            
             <Button x:Name="button_submit"
-                    Text="Salvar Tarefa"
-                    FontAttributes="Bold"
-                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"                  
-                    WidthRequest="300"
-                    HeightRequest="45"
-                    CornerRadius="10"
-                    Margin=" 0, 80, 0, 0"
-                    HorizontalOptions="Center"
-                    Command="{Binding AddMainTaskCommand}"/>
+                 Text="Salvar Sub Tarefa"
+                 FontAttributes="Bold"
+                 BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"                  
+                 WidthRequest="300"
+                 HeightRequest="45"
+                 CornerRadius="10"
+                 Margin=" 0, 80, 0, 0"
+                 HorizontalOptions="Center"
+                 Command="{Binding SaveSubTaskCommand}"/>
 
         </VerticalStackLayout>
     </ScrollView>

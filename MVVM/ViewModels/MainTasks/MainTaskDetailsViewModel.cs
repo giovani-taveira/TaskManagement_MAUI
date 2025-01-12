@@ -31,6 +31,12 @@ namespace TaskManagement.MVVM.ViewModels.MainTasks
         private string _description;
 
         [ObservableProperty]
+        private string _createdAt;
+
+        [ObservableProperty]
+        private string _concludedAt;
+
+        [ObservableProperty]
         private bool _isCompleteButtonEnabled = true;
 
         [ObservableProperty]
@@ -46,6 +52,8 @@ namespace TaskManagement.MVVM.ViewModels.MainTasks
             {
                 Title = task.Title;
                 Description = task.Description;
+                CreatedAt = task.CreatedAt?.ToString("dd/MM/yy");
+                ConcludedAt = task.ConcludedAt?.ToString("dd/MM/yy");
 
                 if(task.Status == StatusEnum.Concluido.ToString())
                 {

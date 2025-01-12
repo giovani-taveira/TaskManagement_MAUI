@@ -7,6 +7,8 @@ namespace TaskManagement.DTOs.MainTask
         string Title,
         string Description,
         DateTime? DeadlineDate,
+        DateTime? CreatedAt,
+        DateTime? ConcludedAt,
         string Status,
         string QtdSubTasks,
         bool IsNotifiable,

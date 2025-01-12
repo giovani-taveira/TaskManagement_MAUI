@@ -30,6 +30,7 @@ namespace TaskManagement.Persistence.Respositories
         {
             entity.Validate();
             await InitializeAsync();
+            var test = entity.Id;
             return await _dbConnection.InsertAsync(entity);
         }
 

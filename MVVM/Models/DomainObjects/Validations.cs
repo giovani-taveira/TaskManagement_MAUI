@@ -8,6 +8,14 @@ namespace TaskManagement.MVVM.Models.DomainObjects
 {
     public static class Validations
     {
+        public static void ValidateGuidIsNotNull(Guid? value, string message)
+        {
+            if (!value.HasValue)
+            {
+                throw new DomainException(message);
+            }
+        }
+
         public static void ValidateIsNullOrEmpty(string value, string message)
         {
             if (string.IsNullOrEmpty(value))

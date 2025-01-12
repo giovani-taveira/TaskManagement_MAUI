@@ -2,11 +2,152 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="TaskManagement.MVVM.Views.SubTask.SubTasksPage"
-             Title="SubTasksPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:TaskManagement.Helpers.ValueConverters"
+             xmlns:local="clr-namespace:TaskManagement.MVVM.Views._Components"
+             Title="Sub Tarefas">
+    
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding GetAllSubTasksCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <converters:StatusToColorConverter x:Key="statusToColorConverter" />
+        <converters:DeadlineDateToStringConverter x:Key="deadlineDateToStringConverter" />
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <Grid Padding="10, 20, 10, 20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="45"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource Border_SearchBar}">
+                <SearchBar x:Name="searchSubTasks"
+                       Placeholder="Buscar sub tarefa"
+                       SearchCommand="{Binding SearchSubTasksCommand}"
+                       SearchCommandParameter="{Binding Text, Source={x:Reference searchSubTasks}}"
+                       TextChanged="searchSubTasks_TextChanged"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource Background2}, Dark={StaticResource BackgroundDark2}}"/>
+
+            </Border>
+
+            <Button x:Name="btnInfo"
+                    Grid.Column="1"
+                    Style="{StaticResource Button_info}"
+                    Clicked="btnInfo_Clicked">
+            </Button>
+
+            <Button x:Name="btnAdd"
+                Grid.Column="2"
+                Style="{StaticResource Button_Add}"
+                Clicked="btnAdd_Clicked">
+            </Button>
+        </Grid>
+
+        <Border Margin="0,20,0,0"
+            Stroke="{AppThemeBinding Light={StaticResource Background1}, Dark={StaticResource BackgroundDark1}}"
+            StrokeShape="RoundRectangle 20,20,0,0"
+            VerticalOptions="FillAndExpand">
+
+            <CollectionView VerticalOptions="Fill" 
+                        BackgroundColor="{AppThemeBinding Light={StaticResource Background1}, Dark={StaticResource BackgroundDark1}}" 
+                        ItemsSource="{Binding SubTasks}"
+                        Margin="0,0,0,0"
+                        SelectionMode="Single"
+                        SelectionChanged="OnTaskSelected">
+
+                <CollectionView.EmptyView>
+                    <Grid>
+                        <ContentView IsVisible="{Binding IsLoading}">
+                            <local:ShimmerEffect IsAnimating="{Binding IsLoading}" />
+                        </ContentView>
+
+                        <Label Text="Nenhuma sub tarefa foi encontrada!"
+                           HorizontalOptions="Center"
+                           Margin="0,20,0,0"
+                           FontSize="16"
+                           IsVisible="{Binding IsNotLoading}" />
+                    </Grid>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Padding="10, 5, 10, 5">
+                            <Border Grid.Column="0"
+                                Stroke="{AppThemeBinding Light={StaticResource Background3}, Dark={StaticResource BackgroundDark3}}"
+                                StrokeShape="RoundRectangle 10,10,10,10"
+                                HorizontalOptions="Fill">
+                                <Border.Shadow>
+                                    <Shadow Brush="Black"
+                                        Opacity="0.1"
+                                        Offset="1,1"
+                                        Radius="10" />
+                                </Border.Shadow>
+
+                                <Frame BackgroundColor="{AppThemeBinding Light={StaticResource Background3}, Dark={StaticResource BackgroundDark3}}"
+                                   BorderColor="Transparent"
+                                   HorizontalOptions="Fill"
+                                   HeightRequest="80"
+                                   Padding="0"
+                                   InputTransparent="True">
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="7"/>
+                                            <ColumnDefinition Width="120"/>
+                                            <ColumnDefinition Width="20"/>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Rectangle Grid.Column="0" Grid.RowSpan="2"
+                                               BackgroundColor="{Binding Status, Converter={StaticResource statusToColorConverter}}"
+                                               HorizontalOptions="Fill"
+                                               VerticalOptions="Fill"/>
+
+                                        <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0"
+                                           Text="{Binding Title}"
+                                           VerticalOptions="Start"
+                                           FontSize="15"
+                                           FontAttributes="Bold"
+                                           Margin="15,10,0,0"/>
+
+                                        <Ellipse Grid.Column="1" Grid.Row="1"
+                                             BackgroundColor="{Binding Status, Converter={StaticResource statusToColorConverter}}"
+                                             HorizontalOptions="Start"
+                                             VerticalOptions="Center"
+                                             Margin="15,0,0,0"
+                                             WidthRequest="10"
+                                             HeightRequest="10"/>
+
+                                        <Label Grid.Column="1" Grid.Row="1"
+                                           Text="{Binding Status}"
+                                           VerticalOptions="Center"
+                                           FontSize="14"
+                                           Margin="30,0,0,0"/>
+
+                                        <Image Grid.Column="2" Grid.Row="1"
+                                           Source="{AppThemeBinding Light=calendar.png, Dark=calendar_white.png}"
+                                           VerticalOptions="Center"/>
+
+                                        <Label Grid.Column="4" Grid.Row="1"
+                                           Text="{Binding DeadlineDate, Converter={StaticResource deadlineDateToStringConverter}}"
+                                           VerticalOptions="Center"
+                                           FontSize="14"
+                                           Margin="3,0,0,0"/>
+                                    </Grid>
+                                </Frame>
+                            </Border>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Border>
+    </StackLayout>
 </ContentPage>

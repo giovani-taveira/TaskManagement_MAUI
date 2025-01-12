@@ -20,6 +20,8 @@ namespace TaskManagement.MVVM.Models
         [NotNull]
         public DateTime CreatedAt { get; init; } = DateTime.Now;
 
+        public DateTime? ConcludedAt { get; set; }
+
         [NotNull]
         public bool IsNotifiable { get; set; }
 

@@ -1,19 +1,22 @@
-﻿using Microsoft.VisualBasic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TaskManagement.Helpers.ValueConverters
 {
-    public class DeadlineDateToStringConverter : IValueConverter
+    public class NullableDateTimeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var date = (DateTime?)value;
-            return date.HasValue ? date.Value.ToString("dd/MM/yyyy") : "Sem Prazo";
+            return value ?? DateTime.Today; // Retorna uma data válida apenas se necessária
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return (DateTime?)value;
         }
     }
 }
