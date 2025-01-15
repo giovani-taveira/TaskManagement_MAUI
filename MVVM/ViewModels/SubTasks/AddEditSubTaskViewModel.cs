@@ -46,12 +46,16 @@ namespace TaskManagement.MVVM.ViewModels.SubTasks
         [ObservableProperty]
         private DateTime? _deadlineDate = null;
 
+        [ObservableProperty]
+        private string _pageTitle;
+
 
         [RelayCommand]
         public async Task GetSubTaskById()
         {
             if (Id == null)
             {
+                PageTitle = "Criar Sub Tarefa";
                 DeadlineDate = DateTime.Now;
                 return;
             }
@@ -60,6 +64,7 @@ namespace TaskManagement.MVVM.ViewModels.SubTasks
 
             if (task != null)
             {
+                PageTitle = "Editar Sub Tarefa";
                 Title = task.Title;
                 Description = task.Description;
                 DeadlineDate = task.DeadlineDate ?? DateTime.Now; ;

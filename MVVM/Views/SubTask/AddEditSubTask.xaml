@@ -4,7 +4,7 @@
              x:Class="TaskManagement.MVVM.Views.SubTask.AddEditSubTask"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:converters="clr-namespace:TaskManagement.Helpers.ValueConverters"
-             Title="Criar Sub Tarefa">
+             Title="{Binding PageTitle}">
 
     <ContentPage.Resources>
         <Style TargetType="Label">

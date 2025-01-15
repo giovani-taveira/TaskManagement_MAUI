@@ -44,12 +44,16 @@ namespace TaskManagement.MVVM.ViewModels.MainTasks
         [ObservableProperty]
         private bool _isNotifiable;
 
+        [ObservableProperty]
+        private string _pageTitle;
+
 
         [RelayCommand]
         public async Task GetMainTaskById()
         {
             if (Id == null)
             {
+                PageTitle = "Criar Tarefa";
                 DeadlineDate = DateTime.Now;
                 return;
             }
@@ -58,6 +62,7 @@ namespace TaskManagement.MVVM.ViewModels.MainTasks
 
             if (task != null)
             {
+                PageTitle = "Editar Tarefa";
                 Title = task.Title;
                 Description = task.Description;
                 DeadlineDate = task.DeadlineDate ?? DateTime.Now;

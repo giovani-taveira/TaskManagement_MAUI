@@ -1,6 +1,8 @@
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.Messaging;
 using TaskManagement.DTOs.SubTask;
 using TaskManagement.MVVM.ViewModels.SubTasks;
+using TaskManagement.MVVM.Views._Components;
 using TaskManagement.Services.Interfaces;
 using static TaskManagement.Helpers.Messages.SubTaskMessages;
 
@@ -10,12 +12,16 @@ public partial class SubTasksPage : ContentPage
 {
     private SubTaskDetails _bottomSheet;
     private readonly ISubTaskService _subTaskService;
+    private readonly IMainTaskService _mainTaskService;
     private readonly Guid _mainTaskId;
-    
-    public SubTasksPage(Guid mainTaskId, ISubTaskService subTaskService)
-	{
+
+    public SubTasksPage(Guid mainTaskId, 
+        ISubTaskService subTaskService, 
+        IMainTaskService mainTaskService)
+    {
         _subTaskService = subTaskService;
         _mainTaskId = mainTaskId;
+        _mainTaskService = mainTaskService;
 
         InitializeComponent();
         BindingContext = new SubTaskViewModel(subTaskService, mainTaskId);
@@ -69,6 +75,7 @@ public partial class SubTasksPage : ContentPage
 
         _bottomSheet = new SubTaskDetails(subTask.Id, _subTaskService);
         _bottomSheet.HasHandle = true;
+     
         _bottomSheet.ShowAsync(Window);
     }
 
@@ -91,6 +98,7 @@ public partial class SubTasksPage : ContentPage
 
     private void btnInfo_Clicked(object sender, EventArgs e)
     {
-
+        var popup = new CustomPopup(new MainTaskInfo(_mainTaskId, _mainTaskService));
+        this.ShowPopup(popup);
     }
 }

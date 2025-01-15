@@ -111,6 +111,6 @@ public partial class MainTasksPage : ContentPage
 
     private void OpenSubTasksPageTask(Guid mainTaskId)
     {
-        Navigation.PushAsync(new SubTasksPage(mainTaskId, _subTaskService));
+        Navigation.PushAsync(new SubTasksPage(mainTaskId, _subTaskService, _mainTaskService));
     }
 }

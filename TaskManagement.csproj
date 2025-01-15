@@ -113,6 +113,9 @@
 	  <MauiXaml Update="MVVM\Views\SubTask\AddEditSubTask.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="MVVM\Views\SubTask\MainTaskInfo.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="MVVM\Views\SubTask\SubTaskDetails.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

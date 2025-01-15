@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TaskManagement.MVVM.Views.SubTask.MainTaskInfo"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Background1}, Dark={StaticResource BackgroundDark3}}"
+             WidthRequest="300"
+             MaximumHeightRequest="600"
+             VerticalOptions="Fill">
+
+    <ContentView.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding GetMainTaskByIdCommand}" EventName="Loaded" />
+    </ContentView.Behaviors>
+
+    <StackLayout>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0"
+                   Text="{Binding Title}"
+                   VerticalOptions="Start"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   Margin="20,20,20,0"/>
+
+            <HorizontalStackLayout Grid.Row="1"
+                           Margin="20,15,0,0" 
+                           Spacing="5"
+                           HorizontalOptions="StartAndExpand">
+
+                <Label FontSize="12" Text="Criado Em:" />
+                <Label FontSize="12" Text="{Binding CreatedAt}" />
+
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Grid.Row="2"
+                           Margin="20,5,0,0" 
+                           Spacing="5"
+                           HorizontalOptions="StartAndExpand">
+
+                <Label FontSize="12" Text="Concluído Em:"/>
+                <Label FontSize="12" Text="{Binding ConcludedAt}"/>
+
+            </HorizontalStackLayout>
+        </Grid>
+
+        <Label Grid.Row="3"
+               Text="{Binding Description}"
+               VerticalOptions="Start"
+               FontSize="14"
+               Margin="20,30,20,20"
+               MaximumHeightRequest=" 450"/>
+    </StackLayout>
+</ContentView>

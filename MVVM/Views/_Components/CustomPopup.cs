@@ -13,6 +13,12 @@ namespace TaskManagement.MVVM.Views._Components
             CanBeDismissedByTappingOutsideOfPopup = true;
         }
 
+        public CustomPopup(View view)
+        {
+            Content = view;
+            CanBeDismissedByTappingOutsideOfPopup = true;
+        }
+
         protected override Task OnClosed(object result, bool wasDismissedByTappingOutsideOfPopup, CancellationToken token = default)
         {
             WeakReferenceMessenger.Default.Send(new DismissedCustomPopupMessage("Dismissed Custom Popup"));
