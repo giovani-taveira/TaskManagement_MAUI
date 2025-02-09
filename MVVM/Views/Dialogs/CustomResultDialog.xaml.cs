@@ -17,6 +17,8 @@ public partial class CustomResultDialog : ContentView
         dialog_image.Source = imagePath;
         dialog_label.Text = message;
 
+        WeakReferenceMessenger.Default.Unregister<DismissedCustomPopupMessage>(this);
+
         WeakReferenceMessenger.Default.Register<DismissedCustomPopupMessage>(this, (r, message) =>
         {
             isDismissed = true;

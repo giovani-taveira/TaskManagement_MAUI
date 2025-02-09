@@ -26,4 +26,18 @@
         <Setter Property="Grid.Column" Value="0" />
     </Style>
 
+    <Style TargetType="Border"
+        x:Key="MainPage_button">
+        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Background3}, Dark={StaticResource BackgroundDark3}}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10,10,10,10" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="Shadow">
+            <Shadow Brush="Black"
+                    Opacity="0.2"
+                    Offset="5,5"
+                    Radius="10" />
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

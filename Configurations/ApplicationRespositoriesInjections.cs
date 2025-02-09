@@ -1,4 +1,5 @@
 ﻿using TaskManagement.MVVM.Models;
+using TaskManagement.MVVM.Views.MainTask;
 using TaskManagement.Persistence.Respositories;
 
 namespace TaskManagement.Configurations

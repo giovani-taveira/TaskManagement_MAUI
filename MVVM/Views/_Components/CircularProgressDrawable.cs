@@ -51,6 +51,8 @@
             canvas.DrawCircle(centerX, centerY, radius - strokeWidth / 2);
 
             canvas.StrokeColor = theme is AppTheme.Dark ? (Color)primaryDarkColor : (Color)primaryColor;
+            strokeWidth = 3;
+            canvas.StrokeSize = strokeWidth;
             float angle = (float)(360 * Progress);
             canvas.DrawArc(
                 centerX - radius + strokeWidth / 2, 

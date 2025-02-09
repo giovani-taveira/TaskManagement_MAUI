@@ -10,21 +10,23 @@ using TaskManagement.Services.Interfaces;
 
 namespace TaskManagement.MVVM.ViewModels.MainTasks
 {
+    [QueryProperty(nameof(Id), "mainTaskId")]
     partial class AddEditTaskViewModel : ObservableValidator
     {
         private readonly IMainTaskService _mainTaskService;
         private readonly INavigation _navigation;
         public AddEditTaskViewModel(IMainTaskService mainTaskService, 
-            INavigation navigation,
-            Guid? mainTaskId)
+            INavigation navigation)
         {
             _mainTaskService = mainTaskService;
             _navigation = navigation;
-            Id = mainTaskId;
         }
 
+        //[ObservableProperty]
+        //public string mainTaskId;
+
         [ObservableProperty]
-        private Guid? _id;
+        public string _id;
 
         [ObservableProperty]
         [Required(ErrorMessage = "O título é obrigatório")]
@@ -51,14 +53,14 @@ namespace TaskManagement.MVVM.ViewModels.MainTasks
         [RelayCommand]
         public async Task GetMainTaskById()
         {
-            if (Id == null)
+            if (string.IsNullOrEmpty(Id))
             {
                 PageTitle = "Criar Tarefa";
                 DeadlineDate = DateTime.Now;
                 return;
             }
 
-            var task = await _mainTaskService.GetMainTasksById(Id.Value);
+            var task = await _mainTaskService.GetMainTasksById(Guid.Parse(Id));
 
             if (task != null)
             {
@@ -87,7 +89,7 @@ namespace TaskManagement.MVVM.ViewModels.MainTasks
                 return;
             }
 
-            if (Id.HasValue)
+            if (!string.IsNullOrEmpty(Id))
                 await UpdateMainTask();
             else
                 await CreateMainTask();
@@ -123,7 +125,7 @@ namespace TaskManagement.MVVM.ViewModels.MainTasks
         {
             var mainTask = new AddEditMainTaskDTO
             (
-                Id: Id,
+                Id: Guid.Parse(Id),
                 Title: Title,
                 Description: Description,
                 DeadlineDate: DeadlineDate,

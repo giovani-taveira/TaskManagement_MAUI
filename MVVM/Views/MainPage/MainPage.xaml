@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="TaskManagement.MainPage"
+             BackgroundColor="{StaticResource Primary}">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding GetAllTasksCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+    
+    <StackLayout>
+        <Image Source="tidyup_logo.png"/>
+
+        <Border Margin="-1,0,-1,-1"
+            Stroke="{AppThemeBinding Light={StaticResource Background1}, Dark={StaticResource BackgroundDark1}}"
+            StrokeShape="RoundRectangle 20,20,0,0"
+            VerticalOptions="FillAndExpand"
+            BackgroundColor="{AppThemeBinding Light={StaticResource Background3}, Dark={StaticResource BackgroundDark3}}">
+
+            <Grid HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="160"/>
+                    <RowDefinition Height="150"/>
+                </Grid.RowDefinitions>
+
+                <VerticalStackLayout Margin="20, 15, 15, 15">
+
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTasksTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+
+                    <Border Grid.Row="0" Grid.Column="0"
+                            Style="{StaticResource MainPage_button}">
+
+                        <Frame Grid.Row="0" Grid.Column="0"
+                               Style="{StaticResource MainPage_Frame}"
+                               Padding="0, 20, 10, 20">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Image Grid.Row="0"
+                                       Source="{AppThemeBinding Light=task.png, Dark=task_white.png}"
+                                       VerticalOptions="End"/>
+
+                                <Label Grid.Row="1"
+                                       Text="Tarefas"
+                                       Style="{StaticResource MainPage_FrameLabel}"/>
+
+                                <Grid Grid.Row="1"
+                                      WidthRequest="20"
+                                      HeightRequest="20"
+                                      VerticalOptions="End"
+                                      HorizontalOptions="End"
+                                      IsVisible="{Binding IsMainTaskCounterEnabled}">
+                                    <Ellipse Fill="Red"/>
+                                    <Label Text="{Binding ActiveMainTasksCount}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="White"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout  Grid.Row="0" Grid.Column="1" 
+                                      Margin="15, 15, 15, 20">
+
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnNotesTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+
+                    <Border Grid.Row="0" Grid.Column="1"
+                        Style="{StaticResource MainPage_button}"
+                            InputTransparent="True">
+
+
+                        <Frame Grid.Row="0" Grid.Column="1"
+                               Style="{StaticResource MainPage_Frame}"
+                               Padding="10, 20, 10, 20">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Image Grid.Row="0"
+                                   Source="{AppThemeBinding Light=note.png, Dark=note_white.png}"
+                                   VerticalOptions="End"/>
+
+                                <Label Grid.Row="1"
+                                       Text="Notas"
+                                       Style="{StaticResource MainPage_FrameLabel}"/>
+                            </Grid>
+                        </Frame>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="1" Grid.Column="0" 
+                                     Margin="20, 0, 15, 15">
+
+                    <Border Grid.Row="1" Grid.Column="0"
+                            Style="{StaticResource MainPage_button}">
+
+                        <Frame Grid.Row="1" Grid.Column="0" 
+                               Style="{StaticResource MainPage_Frame}"
+                               Padding="10, 20, 10, 20">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Image Grid.Row="0"
+                                   Source="{AppThemeBinding Light=subtasks.png, Dark=subtasks_white.png}"
+                                   VerticalOptions="End"/>
+
+                                <Label Grid.Row="1"
+                                       Text="Listas"
+                                       Style="{StaticResource MainPage_FrameLabel}"/>
+                            </Grid>
+                        </Frame>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout  Grid.Row="1" Grid.Column="1" 
+                                      Margin="15, 0, 15, 20">
+
+                    <Border Grid.Row="1" Grid.Column="1"
+                            Style="{StaticResource MainPage_button}">
+
+                        <Frame Grid.Row="1" Grid.Column="1" 
+                               Style="{StaticResource MainPage_Frame}"
+                               Padding="7, 20, 10, 20">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Image Grid.Row="0"
+                                   Source="{AppThemeBinding Light=calendar.png, Dark=calendar_white.png}"
+                                   VerticalOptions="End"/>
+
+                                <Label Grid.Row="1"
+                                       Text="Lembretes"
+                                       Style="{StaticResource MainPage_FrameLabel}"/>
+                            </Grid>
+                        </Frame>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+    </StackLayout>
+</ContentPage>

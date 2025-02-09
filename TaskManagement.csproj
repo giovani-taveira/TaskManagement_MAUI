@@ -71,10 +71,14 @@
 	  <None Remove="Resources\Images\filter_white.png" />
 	  <None Remove="Resources\Images\info.png" />
 	  <None Remove="Resources\Images\info_white.png" />
+	  <None Remove="Resources\Images\note.png" />
+	  <None Remove="Resources\Images\note_white.png" />
 	  <None Remove="Resources\Images\subtasks.png" />
 	  <None Remove="Resources\Images\subtasks_white.png" />
 	  <None Remove="Resources\Images\sucess.png" />
 	  <None Remove="Resources\Images\task.png" />
+	  <None Remove="Resources\Images\task_white.png" />
+	  <None Remove="Resources\Images\tidyup_logo.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -129,6 +133,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\BorderStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\FontStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\FrameStyles.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

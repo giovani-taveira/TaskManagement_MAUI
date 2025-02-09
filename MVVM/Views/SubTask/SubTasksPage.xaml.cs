@@ -13,40 +13,32 @@ public partial class SubTasksPage : ContentPage
     private SubTaskDetails _bottomSheet;
     private readonly ISubTaskService _subTaskService;
     private readonly IMainTaskService _mainTaskService;
-    private readonly Guid _mainTaskId;
 
-    public SubTasksPage(Guid mainTaskId, 
-        ISubTaskService subTaskService, 
+    public SubTasksPage(ISubTaskService subTaskService, 
         IMainTaskService mainTaskService)
     {
         _subTaskService = subTaskService;
-        _mainTaskId = mainTaskId;
         _mainTaskService = mainTaskService;
 
         InitializeComponent();
-        BindingContext = new SubTaskViewModel(subTaskService, mainTaskId);
+        BindingContext = new SubTaskViewModel(subTaskService);
 
-        WeakReferenceMessenger.Default.Register<GetAllSubTasksMessage>(this, (r, message) =>
-        {
-            GetAllSubTasks();
-        });
-
-        WeakReferenceMessenger.Default.Register<OpenEditSubTaskFormMessage>(this, (r, message) =>
-        {
-            OpenEditSubTask(message.Value);
-        });
+        ManageEvents();
     }
 
-    protected override bool OnBackButtonPressed()
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
     {
-        DismissBottomSheet();
-        return false;
+        base.OnNavigatedTo(args);
+        Shell.Current.Navigating += Shell_Navigating;
     }
+
+    private void Shell_Navigating(object sender, ShellNavigatingEventArgs e) => DismissBottomSheet();
 
     private async void btnAdd_Clicked(object sender, EventArgs e)
     {
         DismissBottomSheet();
-        await Navigation.PushAsync(new AddEditSubTask(_subTaskService, null, _mainTaskId));
+        var viewModel = (SubTaskViewModel)BindingContext;
+        await Shell.Current.GoToAsync($"addEditSubTask?subTaskId={null}&mainTaskId={viewModel.MainTaskId}");
     }
 
     private void searchSubTasks_TextChanged(object sender, TextChangedEventArgs e)
@@ -91,14 +83,32 @@ public partial class SubTasksPage : ContentPage
         await binding.GetAllSubTasks();
     }
 
-    private void OpenEditSubTask(Guid subTaskId)
+    private async void OpenEditSubTask(Guid subTaskId)
     {
-        Navigation.PushAsync(new AddEditSubTask(_subTaskService, subTaskId, _mainTaskId));
+        var viewModel = (SubTaskViewModel)BindingContext;
+        await Shell.Current.GoToAsync($"addEditSubTask?subTaskId={subTaskId.ToString()}&mainTaskId={viewModel.MainTaskId}");
     }
 
     private void btnInfo_Clicked(object sender, EventArgs e)
     {
-        var popup = new CustomPopup(new MainTaskInfo(_mainTaskId, _mainTaskService));
+        var viewModel = (SubTaskViewModel)BindingContext;
+        var popup = new CustomPopup(new MainTaskInfo(Guid.Parse(viewModel.MainTaskId), _mainTaskService));
         this.ShowPopup(popup);
+    }
+
+    private void ManageEvents()
+    {
+        WeakReferenceMessenger.Default.Unregister<GetAllSubTasksMessage>(this);
+        WeakReferenceMessenger.Default.Unregister<OpenEditSubTaskFormMessage>(this);
+
+        WeakReferenceMessenger.Default.Register<GetAllSubTasksMessage>(this, (r, message) =>
+        {
+            GetAllSubTasks();
+        });
+
+        WeakReferenceMessenger.Default.Register<OpenEditSubTaskFormMessage>(this, (r, message) =>
+        {
+            OpenEditSubTask(message.Value);
+        });
     }
 }

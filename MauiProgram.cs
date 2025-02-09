@@ -21,10 +21,11 @@ namespace TaskManagement
                 });
 
             builder.Services.AddApplicationServicesInjections();
-            builder.Services.AddApplicationRepositoriesInjections();
+            builder.Services.AddApplicationRepositoriesInjections(); 
+            builder.Services.AddApplicationPagesInjections();
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

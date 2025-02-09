@@ -4,7 +4,6 @@ using TaskManagement.DTOs.MainTask;
 using TaskManagement.Helpers.Enums;
 using TaskManagement.MVVM.ViewModels;
 using TaskManagement.MVVM.Views._Components;
-using TaskManagement.MVVM.Views.SubTask;
 using TaskManagement.Services.Interfaces;
 using static TaskManagement.Helpers.Messages.MainTaskMessages;
 
@@ -26,27 +25,20 @@ public partial class MainTasksPage : ContentPage
         _subTaskService = subTaskService;
 
         BindingContext = new MainTaskViewModel(_mainTaskService);
-
-        WeakReferenceMessenger.Default.Register<GetAllMainTasksMessage>(this, (r, message) =>
-        {
-            GetAllMainTasks();
-        });
-
-        WeakReferenceMessenger.Default.Register<OpenEditFormMessage>(this, (r, message) =>
-        {
-            OpenEditTask(message.Value);
-        });
-
-        WeakReferenceMessenger.Default.Register<OpenSubtasksPageMessage>(this, (r, message) =>
-        {
-            OpenSubTasksPageTask(message.Value);
-        });
+        ManageEvents();
     }
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+        Shell.Current.Navigating += Shell_Navigating;
+    }
+
+    private void Shell_Navigating(object sender, ShellNavigatingEventArgs e) => DismissBottomSheet();
 
     private async void btnAdd_Clicked(object sender, EventArgs e)
     {
         DismissBottomSheet();
-        await Navigation.PushAsync(new AddEditMainTask(_mainTaskService, null)); 
+        await Shell.Current.GoToAsync($"mainTask/addEditMainTask?maintaskid={null}");
     }
 
     private void btnFilter_Clicked(object sender, EventArgs e)
@@ -98,19 +90,41 @@ public partial class MainTasksPage : ContentPage
             _bottomSheet.DismissAsync();
     }
 
-    private void GetAllMainTasks()
+    private async void GetAllMainTasks()
     {
         var binding = (MainTaskViewModel)BindingContext;
-        binding.GetAllMainTasks();
+        await binding.GetAllMainTasks();
     }
 
-    private void OpenEditTask(Guid mainTaskId)
+    private async void OpenEditTask(Guid mainTaskId)
     {
-        Navigation.PushAsync(new AddEditMainTask(_mainTaskService, mainTaskId));
+        await Shell.Current.GoToAsync($"addEditMainTask?mainTaskId={mainTaskId.ToString()}");
     }
 
-    private void OpenSubTasksPageTask(Guid mainTaskId)
+    private async void OpenSubTasksPageTask(Guid mainTaskId)
     {
-        Navigation.PushAsync(new SubTasksPage(mainTaskId, _subTaskService, _mainTaskService));
+        await Shell.Current.GoToAsync($"subTasks?mainTaskId={mainTaskId.ToString()}");
+    }
+
+    private void ManageEvents()
+    {
+        WeakReferenceMessenger.Default.Unregister<GetAllMainTasksMessage>(this);
+        WeakReferenceMessenger.Default.Unregister<OpenEditFormMessage>(this);
+        WeakReferenceMessenger.Default.Unregister<OpenSubtasksPageMessage>(this);
+
+        WeakReferenceMessenger.Default.Register<GetAllMainTasksMessage>(this, (r, message) =>
+        {
+            GetAllMainTasks();
+        });
+
+        WeakReferenceMessenger.Default.Register<OpenEditFormMessage>(this, (r, message) =>
+        {
+            OpenEditTask(message.Value);
+        });
+
+        WeakReferenceMessenger.Default.Register<OpenSubtasksPageMessage>(this, (r, message) =>
+        {
+            OpenSubTasksPageTask(message.Value);
+        });
     }
 }

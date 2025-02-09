@@ -56,7 +56,7 @@ namespace TaskManagement.Services
                 var taskStatus = task.Status == StatusEnum.Ativo.ToString() && task.DeadlineDate.HasValue && DateTime.Today > task.DeadlineDate.Value
                                                 ? StatusEnum.Em_Atraso.ToString().Replace("_", " ") : task.Status;
 
-                var concludedTask = subTasks.Where(x => x.Status.Equals(StatusEnum.Concluido.ToString()));
+                var concludedSubTasks = subTasks.Where(x => x.Status.Equals(StatusEnum.Concluido.ToString())).ToList();
 
                 tasksList.Add(new MainTaskDTO
                 (
@@ -69,7 +69,7 @@ namespace TaskManagement.Services
                     Status: taskStatus,
                     IsNotifiable: task.IsNotifiable,
                     QtdSubTasks: subTasks.Any() ? $"{subTasks.Where(x => x.Status.Equals(StatusEnum.Concluido.ToString())).Count()}/{subTasks.Count()}" : "0/0",
-                    ProgressDrawable: concludedTask.Count() > 0 && subTasks.Count() > 0 ? subTasks.Where(x => x.Status.Equals(StatusEnum.Concluido.ToString())).Count() / subTasks.Count() : 0,
+                    ProgressDrawable: concludedSubTasks.Count() > 0 && subTasks.Count() > 0 ? (double)concludedSubTasks.Count() / subTasks.Count() : 0,
                     CircularProgressDrawableInstance: new CircularProgressDrawable()
                 ));
             }

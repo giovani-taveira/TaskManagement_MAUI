@@ -19,7 +19,7 @@ namespace TaskManagement.MVVM.Models
         public string Status { get; set; }
 
         [NotNull]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; init; } = DateTime.Now;
 
         public DateTime? DeadlineDate { get; set; }
 

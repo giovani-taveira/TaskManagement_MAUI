@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:TaskManagement"
     Shell.FlyoutBehavior="Disabled"
     Title="TaskManagement"
-    BackgroundColor="#14377e">
+    BackgroundColor="{AppThemeBinding Light={StaticResource Background3}, Dark={StaticResource BackgroundDark3}}">
 
     <ShellContent
         Title="Home"

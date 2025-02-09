@@ -15,7 +15,7 @@ namespace TaskManagement.MVVM.Models
 
         public DateTime DeadlineDate { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; init; } = DateTime.Now;
 
         public override void Validate()
         {

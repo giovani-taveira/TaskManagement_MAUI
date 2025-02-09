@@ -5,10 +5,10 @@ namespace TaskManagement.MVVM.Views.SubTask;
 
 public partial class AddEditSubTask : ContentPage
 {
-	public AddEditSubTask(ISubTaskService subTaskService, Guid? subTaskId, Guid mainTaskId)
+	public AddEditSubTask(ISubTaskService subTaskService)
 	{
 		InitializeComponent();
 
-		BindingContext = new AddEditSubTaskViewModel(subTaskService, this.Navigation, subTaskId, mainTaskId);
+		BindingContext = new AddEditSubTaskViewModel(subTaskService, this.Navigation);
 	}
 }

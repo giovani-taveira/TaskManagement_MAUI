@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="colorPrimary">#14377e</color>
+	<color name="colorPrimary">#efcf46</color>
 	<color name="colorPrimaryDark">#1f1f1f</color>
-	<color name="colorAccent">#14377e</color>
+	<color name="colorAccent">#efcf46</color>
 
 	<style name="MainTheme" parent="MainTheme.Base">
-		<item name="colorPrimary">#14377e</item>
-		<item name="colorAccent">#14377e</item>
+		<item name="colorPrimary">#efcf46</item>
+		<item name="colorAccent">#efcf46</item>
 	</style>
 	<style name="NightTheme" parent="MainTheme.Base">
-		<item name="colorPrimary">#5acbc9</item>
-		<item name="colorAccent">#5acbc9</item>
+		<item name="colorPrimary">#efcf46</item>
+		<item name="colorAccent">#efcf46</item>
 	</style>
 </resources>

@@ -15,7 +15,7 @@ namespace TaskManagement.MVVM.Models
         public Guid ToDoListId { get; set; }
 
         [NotNull]
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; init; } = DateTime.Now;
 
         public override void Validate()
         {

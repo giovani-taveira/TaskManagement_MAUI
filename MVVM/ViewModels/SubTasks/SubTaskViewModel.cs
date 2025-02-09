@@ -6,16 +6,18 @@ using TaskManagement.Services.Interfaces;
 
 namespace TaskManagement.MVVM.ViewModels.SubTasks
 {
+    [QueryProperty(nameof(MainTaskId), "mainTaskId")]
     public partial class SubTaskViewModel : ObservableObject
     {
         private readonly ISubTaskService _subTaskService;
-        private Guid _mainTaskId;
 
-        public SubTaskViewModel(ISubTaskService subTaskService, Guid mainTaskId)
+        public SubTaskViewModel(ISubTaskService subTaskService)
         {
             _subTaskService = subTaskService;
-            _mainTaskId = mainTaskId;
         }
+
+        [ObservableProperty]
+        public string _mainTaskId;
 
         [ObservableProperty]
         public bool _isLoading;
@@ -30,11 +32,14 @@ namespace TaskManagement.MVVM.ViewModels.SubTasks
 
         [RelayCommand]
         public async Task GetAllSubTasks()
-        {                   
+        {
+            if (string.IsNullOrEmpty(MainTaskId))
+                return;
+
             IsLoading = true;
             IsNotLoading = false;
 
-            var tasks = await _subTaskService.GetAllSubTasks(_mainTaskId);
+            var tasks = await _subTaskService.GetAllSubTasks(Guid.Parse(MainTaskId));
 
             SubTasks.Clear();
             tasks.ForEach(SubTasks.Add);

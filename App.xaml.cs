@@ -1,6 +1,4 @@
-﻿using TaskManagement.MVVM.Views;
-using TaskManagement.MVVM.Views.MainTask;
-using TaskManagement.Services.Interfaces;
+﻿using TaskManagement.Services.Interfaces;
 
 namespace TaskManagement
 {
@@ -10,7 +8,7 @@ namespace TaskManagement
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainTasksPage(mainTaskService, subTaskService));
+            MainPage = new AppShell();
         }
     }
 }

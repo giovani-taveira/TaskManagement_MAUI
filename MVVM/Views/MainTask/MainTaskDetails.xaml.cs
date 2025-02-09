@@ -21,10 +21,7 @@ public partial class MainTaskDetails : BottomSheet
 
         InitializeComponent();
 
-        WeakReferenceMessenger.Default.Register<BottomSheetClosedMessage>(this, (r, message) =>
-        {
-            OnCloseBottomSheetRequested();
-        });
+        ManageEvents();
     }
 
     private async void btnEdit_Clicked(object sender, EventArgs e)
@@ -43,5 +40,15 @@ public partial class MainTaskDetails : BottomSheet
     {
         WeakReferenceMessenger.Default.Send(new OpenSubtasksPageMessage(_mainTaskId));
         await this.DismissAsync();
+    }
+
+    private void ManageEvents()
+    {
+        WeakReferenceMessenger.Default.Unregister<BottomSheetClosedMessage>(this);
+
+        WeakReferenceMessenger.Default.Register<BottomSheetClosedMessage>(this, (r, message) =>
+        {
+            OnCloseBottomSheetRequested();
+        });
     }
 }

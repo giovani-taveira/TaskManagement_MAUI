@@ -10,26 +10,24 @@ using TaskManagement.Services.Interfaces;
 
 namespace TaskManagement.MVVM.ViewModels.SubTasks
 {
+    [QueryProperty(nameof(Id), "subTaskId")]
+    [QueryProperty(nameof(MainTaskId), "mainTaskId")]
     partial class AddEditSubTaskViewModel : ObservableValidator
     {
         private readonly ISubTaskService _subTaskService;
         private readonly INavigation _navigation;
         public AddEditSubTaskViewModel(ISubTaskService subTaskService,
-            INavigation navigation,
-            Guid? subTaskTaskId,
-            Guid mainTaskId)
+            INavigation navigation)
         {
             _subTaskService = subTaskService;
             _navigation = navigation;
-            Id = subTaskTaskId;
-            MainTaskId = mainTaskId;
         }
 
         [ObservableProperty]
-        private Guid? _id;
+        private string _id;
 
         [ObservableProperty]
-        private Guid _mainTaskId;
+        private string _mainTaskId;
 
         [ObservableProperty]
         [Required(ErrorMessage = "O título é obrigatório")]
@@ -53,14 +51,14 @@ namespace TaskManagement.MVVM.ViewModels.SubTasks
         [RelayCommand]
         public async Task GetSubTaskById()
         {
-            if (Id == null)
+            if (string.IsNullOrEmpty(Id))
             {
                 PageTitle = "Criar Sub Tarefa";
                 DeadlineDate = DateTime.Now;
                 return;
             }
 
-            var task = await _subTaskService.GetSubTaskById(Id.Value);
+            var task = await _subTaskService.GetSubTaskById(Guid.Parse(Id));
 
             if (task != null)
             {
@@ -84,7 +82,7 @@ namespace TaskManagement.MVVM.ViewModels.SubTasks
                 return;
             }
 
-            if (Id.HasValue)
+            if (!string.IsNullOrEmpty(Id))
                 await UpdateSubTask();
             else
                 await CreateSubTask();
@@ -95,7 +93,7 @@ namespace TaskManagement.MVVM.ViewModels.SubTasks
             var subTask = new AddEditSubTaskDTO
             (
                 Id: null,
-                MainTaskId: MainTaskId,
+                MainTaskId: Guid.Parse(MainTaskId),
                 Title: Title,
                 Description: Description,
                 Status: StatusEnum.Ativo.ToString(),
@@ -107,7 +105,7 @@ namespace TaskManagement.MVVM.ViewModels.SubTasks
             if (response.Sucess)
             {
                 await Application.Current.MainPage.ShowPopupAsync(new CustomPopup("sucess.gif", "Sub tarefa criada com sucesso!", 3000));
-                await _navigation.PopAsync();
+                await Shell.Current.GoToAsync("..");
             }
             else
             {
@@ -119,8 +117,8 @@ namespace TaskManagement.MVVM.ViewModels.SubTasks
         {
             var subTask = new AddEditSubTaskDTO
             (
-                Id: Id,
-                MainTaskId: MainTaskId,
+                Id: Guid.Parse(Id),
+                MainTaskId: Guid.Parse(MainTaskId),
                 Title: Title,
                 Description: Description,
                 Status: StatusEnum.Ativo.ToString(),
@@ -132,7 +130,7 @@ namespace TaskManagement.MVVM.ViewModels.SubTasks
             if (response.Sucess)
             {
                 await Application.Current.MainPage.ShowPopupAsync(new CustomPopup("sucess.gif", "Sub tarefa atualizada com sucesso!", 3000));
-                await _navigation.PopAsync();
+                await Shell.Current.GoToAsync("..");
             }
             else
             {

@@ -17,10 +17,7 @@ public partial class SubTaskDetails : BottomSheet
 
         BindingContext = new SubTaskDetailsViewModel(subTaskService, subTaskId);
 
-        WeakReferenceMessenger.Default.Register<SubTaskBottomSheetClosedMessage>(this, (r, message) =>
-        {
-            OnCloseBottomSheetRequested();
-        });
+        ManageEvents();
     }
 
     private async void btnEdit_Clicked(object sender, EventArgs e)
@@ -33,5 +30,15 @@ public partial class SubTaskDetails : BottomSheet
     {
         WeakReferenceMessenger.Default.Send(new GetAllSubTasksMessage("Get all sub tasks"));
         await this.DismissAsync();
+    }
+
+    private void ManageEvents()
+    {
+        WeakReferenceMessenger.Default.Unregister<SubTaskBottomSheetClosedMessage>(this);
+
+        WeakReferenceMessenger.Default.Register<SubTaskBottomSheetClosedMessage>(this, (r, message) =>
+        {
+            OnCloseBottomSheetRequested();
+        });
     }
 }
